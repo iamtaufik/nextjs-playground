@@ -2,7 +2,7 @@ import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-const AuthOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   secret: process.env.SECRET,
 
   providers: [
@@ -31,17 +31,16 @@ const AuthOptions: AuthOptions = {
   ],
   callbacks: {
     session: async ({ session, user }: any) => {
-      session.user.id = user.id;
       return session;
     },
     redirect: async ({ url, baseUrl }) => {
       console.log('url', url);
       console.log('baseUrl', baseUrl);
-      return baseUrl
+      return baseUrl;
     },
   },
 };
 
-export const handler = NextAuth(AuthOptions);
+export const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
